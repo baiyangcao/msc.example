@@ -28,6 +28,9 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile 'com.github.kittinunf.fuel:fuel:1.7.0'
     compile 'com.beust:klaxon:0.30'
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.16'
     compile files("lib/Msc.jar")
     compile files("lib/json-jena-1.0.jar")
+    testCompile "junit:junit:4.12"
+    testCompile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.16'
 }
