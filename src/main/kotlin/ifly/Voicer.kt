@@ -27,9 +27,8 @@ class Voicer {
         println("开始聆听")
         mIat.startListening(recoginzerlistener)
 
-        while (mIat.isListening)
-        {
-            delay(100L)
+        while (mIat.isListening) {
+            delay(500L)
         }
     }
 
@@ -45,12 +44,9 @@ class Voicer {
 
         override fun onResult(result: RecognizerResult, isLast: Boolean) {
 //            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            if(isLast)
-            {
+            if (isLast) {
                 OnResult(results.joinToString(""))
-            }
-            else
-            {
+            } else {
                 var builder = StringBuilder(result.resultString)
                 var json = parser.parse(builder) as JsonObject
                 var ws = json.array<JsonObject>("ws") as JsonArray<JsonObject>
@@ -76,6 +72,59 @@ class Voicer {
 
         override fun onError(p0: SpeechError?) {
 //            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+    }
+
+
+    suspend fun speak(word: String, OnResult: () -> Unit) {
+        var mTts = SpeechSynthesizer.createSynthesizer()
+
+        mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan")
+        mTts.setParameter(SpeechConstant.SPEED, "40")
+        mTts.setParameter(SpeechConstant.VOLUME, "80")
+
+        var mSynthesizerListener = VoicerSynthesizerListener()
+        mSynthesizerListener.OnResult = OnResult
+
+        mTts.startSpeaking(word, mSynthesizerListener)
+
+        while (mTts.isSpeaking)
+        {
+            delay(500L)
+        }
+    }
+
+    class VoicerSynthesizerListener :SynthesizerListener {
+
+        var OnResult = fun() {}
+
+        override fun onBufferProgress(p0: Int, p1: Int, p2: Int, p3: String?) {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onSpeakBegin() {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onSpeakProgress(p0: Int, p1: Int, p2: Int) {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onEvent(p0: Int, p1: Int, p2: Int, p3: Int, p4: Any?, p5: Any?) {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onSpeakPaused() {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onSpeakResumed() {
+//            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun onCompleted(error: SpeechError?) {
+            OnResult()
         }
 
     }
