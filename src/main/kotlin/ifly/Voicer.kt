@@ -77,7 +77,7 @@ class Voicer {
     }
 
 
-    suspend fun speak(word: String, OnResult: () -> Unit) {
+    suspend fun speak(word: String, OnResult: () -> Unit = fun() {}) {
         var mTts = SpeechSynthesizer.createSynthesizer()
 
         mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan")
