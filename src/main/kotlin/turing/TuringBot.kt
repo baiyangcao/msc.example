@@ -27,6 +27,7 @@ class TuringBot(
         if(code == 100000) {
             text = json.string("text").orEmpty()
         } else {
+            println(result)
             text = "抱歉！我还处理不了这样的结果"
         }
 
