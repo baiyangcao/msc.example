@@ -23,8 +23,8 @@ class TuringBot(
         var text = ""
         var (_, _, result) = Fuel.post(baseurl, listOf("key" to apikey, "info" to word, "userid" to userid)).responseString()
         var json = parser.parse(StringBuilder(result.get())) as JsonObject
-        var code = json.int("code")
-        if(code == 100000) {
+        var code = json.int("code").toString()
+        if(code == "100000" || code.startsWith("4000")) {
             text = json.string("text").orEmpty()
         } else {
             println(result)
